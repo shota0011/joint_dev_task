@@ -150,7 +150,19 @@ end
 
 class UserQ17
   # 以下に回答を記載
+  def initialize(name:, age:, gender:)
+    @name = name
+    @age = age
+    @gender = gender
+  end
 
+  def info
+    puts <<~TEXT
+      "名前:#{@name}"
+      "年齢:#{@age}"
+      "性別:#{@gender}"
+    TEXT
+  end
 end
 
 def q17
@@ -165,6 +177,18 @@ end
 
 class UserQ18
   # 以下に回答を記載
+  def initialize(name:, age:)
+    @name = name
+    @age = age
+  end
+
+  def introduce
+    if @age > 20
+      puts "こんにちは、#{@name}と申します。宜しくお願いいたします。"
+    elsif @age < 20
+      puts "はいさいまいど〜、#{@name}です!!!"
+    end
+  end
 
 end
 
@@ -179,9 +203,10 @@ end
 
 class Item
   # 以下を修正して下さい
+  attr_reader :name
 
   def initialize(name)
-    @name = name
+    @name = name[:name]
   end
 end
 
@@ -193,12 +218,38 @@ end
 
 class UserQ20
   # 以下に回答を記載
+  attr_reader :name, :age
 
+  def initialize(name:, age:)
+    #Zooクラスでは使用出来ない
+    #どうやってZooクラスで使用するか？
+    @name = name
+    @age = age
+  end
 end
 
 class Zoo
   # 以下に回答を記載
+  # name: をinitializeに定義しないとArgumentErrorになる 使わないのになぜ必要なのか?
+  def initialize(name:, entry_fee:)
+    @entry_fee = entry_fee
+  end
 
+  def info_entry_fee(user)
+    fee = case user.age
+    when 0..5
+      @entry_fee[:infant]
+    when 6..12
+      @entry_fee[:children]
+    when 13..64
+      @entry_fee[:adult]
+    when 65..120
+      @entry_fee[:senior]
+    end
+    # 変数を作って代入する #メソッド内でメソッドを使えない
+    # ①class外でインスタンス変数を呼び出すときはuser.nameで呼び出す
+    puts "#{user.name}さんの入場料は#{fee}円です。"
+  end
 end
 
 
